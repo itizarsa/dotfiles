@@ -1,0 +1,150 @@
+# creates variables and store public and local IP addresses
+export LOCAL_IP="ipconfig getifaddr en0"
+export PUBLIC_IP="dig +short myip.opendns.com @resolver1.opendns.com"
+
+
+# This Displays Quotes
+fortune -s | boxes -d parchment | lolcat
+
+
+# Path to your oh-my-zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
+# Set name of the theme to load
+ZSH_THEME="spaceship"
+
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(zsh-autosuggestions zsh-syntax-highlighting alias-tips)
+
+source $ZSH/oh-my-zsh.sh
+
+
+# This loads fnm - Fast Node.js Manager
+eval "$(fnm env)"
+
+
+# -------------------------------- Youtube DL -------------------------------- #
+alias ydl='youtube-dl'
+alias ydl-mp3='youtube-dl --extract-audio -f bestaudio[ext=mp3] --no-playlist'
+alias ytd='youtube-dl -f "bestvideo[height<=1080]+bestaudio/best[height<= 1080]"'
+alias ydl-480='youtube-dl -f "bestvideo[height<=480][ext=mp4]+bestaudio[ext=m4a]"'
+alias ydl-720='youtube-dl -f "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]"'
+alias ydl-best='youtube-dl -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio"'
+alias ydl-4k='echo -e "This will transcode the video from webm to h264 which could take a long time\n\n"; youtube-dl -f "bestvideo[ext=webm]+bestaudio[ext=m4a]" --recode-video mp4'
+
+# -------------------------------- Common -------------------------------- #
+alias vsz="code ~/.zshrc"
+alias reload="source ~/.zshrc"
+alias kill="netstat -vanp tcp | grep"
+
+alias ipl="$LOCAL_IP && $LOCAL_IP | pbcopy" # Display Local IP and copy to clipboard
+alias ip="$PUBLIC_IP && $PUBLIC_IP | pbcopy" # Display Public IP and copy to clipboard
+
+alias path="tr ':' '\n' <<< "$PATH"" # Pretty print the various paths in $PATH
+
+# -------------------------------- Server -------------------------------- #
+alias smartmls="ssh root@149.56.17.28"
+alias workplace="ssh root@51.15.41.42"
+alias monday="ssh ubuntu@18.156.104.53"
+alias playstore="ssh root@188.166.75.206"
+
+# -------------------------------- FreshWorks -------------------------------- #
+alias fr="fdk run"
+alias fp="fdk pack ."
+alias fc="fdk create"
+alias fv="fdk validate"
+alias frd="NODE_DEBUG=fdk fdk run"
+alias fpskip="fdk pack --skip-validation lint"
+
+# -------------------------------- FINDER -------------------------------- #
+alias rm="trash"
+alias dev="cd ~/dev"
+alias cr="code . -r"
+alias work="cd ~/work"
+alias dt='cd ~/Desktop'
+alias ls="exa --icons --group-directories-first --all"
+alias show-files="defaults write com.apple.finder AppleShowAllFiles YES; killall Finder"
+alias hide-files="defaults write com.apple.finder AppleShowAllFiles NO; killall Finder"
+alias ..="cd .." # Up 1 directory
+alias ...="cd ../.." # Up 2 directories
+alias ....="cd ../../.." # Up 3 directories
+alias tree="exa --tree --level=2"
+
+# -------------------------------- NPM -------------------------------- #
+alias n='nodemon'
+alias nd='npm run dev'
+alias ns='npm run start'
+alias ndc='npx depcheck'
+alias nbc='npm run build:core'
+alias nsc='npm run start:core'
+alias nscr='npm run start:cron'
+alias nbcr='npm run build:cron'
+alias npm-local='npm ls --depth=0'
+alias npm-global='npm -g ls --depth=0'
+alias list-nm='find . -name "node_modules" -type d -prune -print | xargs du -chs'
+alias rm-nm='find . -name "node_modules" -type d -prune -print -exec rm -rf "{}" \'
+
+# -------------------------------- BREW -------------------------------- #
+alias bsl='brew services list'
+
+# -------------------------------- MONGO -------------------------------- #
+alias mongo-start='brew services run mongodb-community'                                                                                                                 ✔ 
+alias mongo-stop='brew services stop mongodb-community'
+
+# -------------------------------- PostgreSQL -------------------------------- #
+alias ps-start="brew services start postgresql@12"
+alias ps-stop="brew services stop postgresql@12"
+
+# -------------------------------- REDIS -------------------------------- #
+alias rs-start="brew services start redis"
+alias rs-stop="brew services stop redis"
+
+# -------------------------------- GIT -------------------------------- #
+alias ga="git add"
+alias gb="git branch"
+alias gc="git commit -m"
+alias gs="git status -s"
+alias gco="git checkout"
+alias gl="git pull origin"
+alias gdbl="git branch -D"
+alias gcb="git checkout -b"
+alias gp="git push -u origin"
+alias gpr="git remote prune origin"
+alias gre="git reset ."
+alias grs="git reset --soft"
+alias grh="git reset --hard"
+alias gus="git reset HEAD --"
+alias gdbr="git push origin --delete"
+alias ggu="git config --list | grep user"
+alias glu="git config --local --list | grep user"
+alias gwc='git config user.email "arshath.h@spritle.com"'
+alias sync-repo="git fetch upstream && git checkout master && git merge upstream/master"
+alias glc='git log --oneline --pretty="\"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"\"'
+alias gla='git log --graph --pretty="\"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"\" --all'
+
+
+# ---------------------------------------------------------------- #
+
+# autoload -U add-zsh-hook
+
+# load-nvmrc() {
+#   local node_version="$(nvm version)"
+#   local nvmrc_path="$(nvm_find_nvmrc)"
+
+#   if [ -n "$nvmrc_path" ]; then
+#     local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+#     if [ "$nvmrc_node_version" = "N/A" ]; then
+#       nvm install
+#     elif [ "$nvmrc_node_version" != "$node_version" ]; then
+#       nvm use
+#     fi
+#   elif [ "$node_version" != "$(nvm version default)" ]; then
+#     echo "Reverting to nvm default version"
+#     nvm use default
+#   fi
+# }
+
+# add-zsh-hook chpwd load-nvmrc
+
+# load-nvmrc
